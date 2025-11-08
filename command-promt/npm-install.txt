@@ -1,0 +1,3 @@
+Cmd: 	
+	
+	npm install express mongoose ejs multer

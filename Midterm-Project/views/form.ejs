@@ -1,0 +1,689 @@
+<%- include('partials/header') %>
+
+<div class="form-page-container">
+  <div class="form-wrapper">
+    <!-- Header Section -->
+    <div class="form-header-section">
+      <div class="header-content">
+        <div class="header-icon">
+          <i class="fas fa-feather-alt"></i>
+        </div>
+        <h1 class="page-title"><%= button %></h1>
+        <p class="page-subtitle">Share your literary treasure with the world</p>
+      </div>
+    </div>
+
+    <!-- Main Form Card -->
+    <div class="form-card">
+      <form action="<%= action %>" method="POST" enctype="multipart/form-data" class="book-form">
+        <!-- Title Field -->
+        <div class="form-group">
+          <div class="input-container">
+            <i class="fas fa-heading input-icon"></i>
+            <input 
+              type="text" 
+              name="title" 
+              value="<%= book.title || '' %>" 
+              class="form-input" 
+              id="titleInput"
+              placeholder="Enter book title"
+              required
+            >
+            <label for="titleInput" class="input-label">Book Title</label>
+          </div>
+        </div>
+
+        <!-- Author Field -->
+        <div class="form-group">
+          <div class="input-container">
+            <i class="fas fa-user-pen input-icon"></i>
+            <input 
+              type="text" 
+              name="author" 
+              value="<%= book.author || '' %>" 
+              class="form-input" 
+              id="authorInput"
+              placeholder="Enter author name"
+              required
+            >
+            <label for="authorInput" class="input-label">Author Name</label>
+          </div>
+        </div>
+
+        <!-- Description Field -->
+        <div class="form-group">
+          <div class="input-container">
+            <i class="fas fa-align-left input-icon textarea-icon"></i>
+            <textarea 
+              name="description" 
+              class="form-input form-textarea" 
+              id="descriptionInput"
+              placeholder="Describe the book's content, genre, and key themes..."
+              rows="4"
+            ><%= book.description || '' %></textarea>
+            <label for="descriptionInput" class="input-label">Book Description</label>
+          </div>
+        </div>
+
+        <!-- Image Upload Section -->
+        <div class="upload-section">
+          <div class="section-label">
+            <i class="fas fa-camera me-2"></i>Book Cover Image
+          </div>
+          
+          <!-- Upload Area -->
+          <div class="upload-area" id="uploadArea">
+            <div class="upload-content" id="uploadContent">
+              <i class="fas fa-cloud-upload-alt upload-icon"></i>
+              <h4 class="upload-title">Drop your book cover here</h4>
+              <p class="upload-subtitle">or click to browse</p>
+              <span class="upload-info">Supports: JPG, PNG, WEBP • Max 5MB</span>
+            </div>
+            <input 
+              type="file" 
+              name="image" 
+              class="upload-input" 
+              id="imageUpload"
+              accept="image/*"
+            >
+          </div>
+
+          <!-- Current Image Preview -->
+          <% if (book.image) { %>
+            <div class="image-preview-section">
+              <p class="preview-label">Current Cover:</p>
+              <div class="preview-container">
+                <div class="preview-image-wrapper">
+                  <img src="/uploads/<%= book.image %>" alt="Current book cover" class="preview-image">
+                  <button type="button" class="preview-remove-btn" onclick="removeImage()" title="Remove image">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          <% } %>
+
+          <!-- New Image Preview -->
+          <div class="image-preview-section" id="imagePreviewContainer">
+            <p class="preview-label">New Cover Preview:</p>
+            <div class="preview-container">
+              <div class="preview-image-wrapper">
+                <img id="imagePreview" class="preview-image">
+                <button type="button" class="preview-remove-btn" onclick="clearImage()" title="Remove image">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <a href="/books" class="btn btn-cancel">
+            <i class="fas fa-arrow-left me-2"></i>Back to Books
+          </a>
+          <button type="submit" class="btn btn-submit">
+            <i class="fas fa-plus me-2"></i><%= button %>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  :root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #8b5cf6;
+    --accent: #06d6a0;
+    --text: #1e293b;
+    --text-light: #64748b;
+    --background: #ffffff;
+    --surface: #f8fafc;
+    --border: #e2e8f0;
+    --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --gradient: linear-gradient(135deg, var(--primary), var(--primary-light));
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .form-page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .form-wrapper {
+    width: 100%;
+  }
+
+  /* Header Section */
+  .form-header-section {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: white;
+  }
+
+  .header-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .header-icon {
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    color: white;
+    font-size: 2.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  }
+
+  .page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .page-subtitle {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    font-weight: 400;
+  }
+
+  /* Form Card */
+  .form-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+  }
+
+  .form-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: var(--shadow-hover);
+  }
+
+  /* Form Groups */
+  .form-group {
+    margin-bottom: 2rem;
+  }
+
+  .input-container {
+    position: relative;
+  }
+
+  .input-icon {
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.2rem;
+    z-index: 2;
+    transition: var(--transition);
+  }
+
+  .textarea-icon {
+    top: 2rem;
+    transform: none;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 1.5rem 1.5rem 1.5rem 4rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    font-size: 1.1rem;
+    color: white;
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+  }
+
+  .form-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+  }
+
+  .form-input:focus + .input-label,
+  .form-input:not(:placeholder-shown) + .input-label {
+    top: -0.5rem;
+    left: 4rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(99, 102, 241, 0.3);
+    padding: 0.2rem 0.8rem;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+  }
+
+  .form-input:focus ~ .input-icon {
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .form-textarea:focus ~ .textarea-icon {
+    transform: none;
+    color: white;
+  }
+
+  .input-label {
+    position: absolute;
+    top: 50%;
+    left: 4rem;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    pointer-events: none;
+    transition: var(--transition);
+    font-weight: 500;
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .form-textarea + .input-label {
+    top: 2rem;
+    transform: none;
+  }
+
+  .form-textarea:focus + .input-label,
+  .form-textarea:not(:placeholder-shown) + .input-label {
+    top: -0.5rem;
+    transform: none;
+  }
+
+  /* Upload Section */
+  .upload-section {
+    margin: 3rem 0;
+  }
+
+  .section-label {
+    font-weight: 600;
+    color: white;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .upload-area {
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+
+  .upload-area:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .upload-area.dragover {
+    border-color: var(--accent);
+    background: rgba(6, 214, 160, 0.1);
+  }
+
+  .upload-content {
+    pointer-events: none;
+  }
+
+  .upload-icon {
+    font-size: 3.5rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+  }
+
+  .upload-area:hover .upload-icon {
+    color: white;
+    transform: scale(1.1);
+  }
+
+  .upload-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+
+  .upload-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .upload-info {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .upload-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  /* Image Previews */
+  .image-preview-section {
+    margin-top: 2rem;
+  }
+
+  .preview-label {
+    font-weight: 600;
+    color: white;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .preview-container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .preview-image-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  .preview-image {
+    width: 140px;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    transition: var(--transition);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .preview-image-wrapper:hover .preview-image {
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .preview-remove-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 36px;
+    height: 36px;
+    background: #ef4444;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: var(--transition);
+    font-size: 1rem;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .preview-image-wrapper:hover .preview-remove-btn {
+    opacity: 1;
+  }
+
+  .preview-remove-btn:hover {
+    background: #dc2626;
+    transform: scale(1.1);
+  }
+
+  #imagePreviewContainer {
+    display: none;
+  }
+
+  /* Form Actions */
+  .form-actions {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 1.2rem 2rem;
+    border: none;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    backdrop-filter: blur(20px);
+  }
+
+  .btn-cancel {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
+  }
+
+  .btn-submit {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-submit:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-submit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.6s;
+  }
+
+  .btn-submit:hover::before {
+    left: 100%;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .form-page-container {
+      padding: 1rem;
+    }
+
+    .form-card {
+      padding: 2rem 1.5rem;
+      border-radius: 20px;
+    }
+
+    .page-title {
+      font-size: 2.2rem;
+    }
+
+    .header-icon {
+      width: 80px;
+      height: 80px;
+      font-size: 2rem;
+    }
+
+    .form-actions {
+      flex-direction: column;
+    }
+
+    .upload-area {
+      padding: 2rem 1rem;
+    }
+
+    .upload-title {
+      font-size: 1.2rem;
+    }
+
+    .form-input {
+      padding: 1.25rem 1.25rem 1.25rem 3.5rem;
+    }
+
+    .input-icon {
+      left: 1.25rem;
+    }
+
+    .input-label {
+      left: 3.5rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const uploadArea = document.getElementById('uploadArea');
+    const imageUpload = document.getElementById('imageUpload');
+    const imagePreview = document.getElementById('imagePreview');
+    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+    const uploadContent = document.getElementById('uploadContent');
+
+    // Click to upload
+    uploadArea.addEventListener('click', function(e) {
+      if (e.target !== imageUpload) {
+        imageUpload.click();
+      }
+    });
+
+    // File selection handler
+    imageUpload.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        handleFileSelection(file);
+      }
+    });
+
+    // Drag and drop functionality
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      uploadArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      uploadArea.addEventListener(eventName, function() {
+        uploadArea.classList.add('dragover');
+      }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      uploadArea.addEventListener(eventName, function() {
+        uploadArea.classList.remove('dragover');
+      }, false);
+    });
+
+    uploadArea.addEventListener('drop', function(e) {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      if (files[0]) {
+        handleFileSelection(files[0]);
+      }
+    }, false);
+
+    function handleFileSelection(file) {
+      // Validate file type and size
+      const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+      const maxSize = 5 * 1024 * 1024; // 5MB
+
+      if (!validTypes.includes(file.type)) {
+        alert('Please select a valid image file (JPG, PNG, or WEBP)');
+        return;
+      }
+
+      if (file.size > maxSize) {
+        alert('File size must be less than 5MB');
+        return;
+      }
+
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        imagePreview.src = e.target.result;
+        imagePreviewContainer.style.display = 'block';
+        uploadContent.style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  function clearImage() {
+    const imageUpload = document.getElementById('imageUpload');
+    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+    const uploadContent = document.getElementById('uploadContent');
+    
+    imageUpload.value = '';
+    imagePreviewContainer.style.display = 'none';
+    uploadContent.style.display = 'block';
+  }
+
+  function removeImage() {
+    if (confirm('Are you sure you want to remove the current book cover?')) {
+      // This would typically be handled server-side
+      // For now, we'll just hide the current image preview
+      document.querySelector('.current-image-preview').style.display = 'none';
+    }
+  }
+</script>
+
+<%- include('partials/footer') %>

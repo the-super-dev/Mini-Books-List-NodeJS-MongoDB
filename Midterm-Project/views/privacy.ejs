@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Privacy Policy - Mini Book List App</title>
+  <link rel="icon" href="/images/favicon.ico">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #667eea;
+      --secondary-color: #764ba2;
+      --accent-color: #f093fb;
+      --text-color: #2c3e50;
+      --bg-color: #ffffff;
+      --card-bg: #ffffff;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] {
+      --primary-color: #8a9bff;
+      --secondary-color: #9d6bd6;
+      --accent-color: #ff8ce6;
+      --text-color: #f8f9fa;
+      --bg-color: #1a1d23;
+      --card-bg: #2d3748;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+      color: var(--text-color);
+      min-height: 100vh;
+      transition: all 0.4s ease;
+      line-height: 1.6;
+    }
+
+    [data-theme="dark"] body {
+      background: linear-gradient(135deg, #1a1d23 0%, #2d3748 100%);
+    }
+
+    .privacy-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .privacy-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .privacy-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .privacy-subtitle {
+      font-size: 1.3rem;
+      color: #6c757d;
+      max-width: 600px;
+      margin: 0 auto;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+
+    .privacy-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeInUp 0.8s ease 0.4s both;
+    }
+
+    .privacy-intro {
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      color: #6c757d;
+      font-weight: 500;
+    }
+
+    .privacy-points {
+      list-style: none;
+      padding: 0;
+      margin: 2.5rem 0;
+    }
+
+    .privacy-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      background: rgba(102, 126, 234, 0.05);
+      border-radius: 15px;
+      border-left: 4px solid var(--primary-color);
+      transition: all 0.3s ease;
+    }
+
+    .privacy-point:hover {
+      background: rgba(102, 126, 234, 0.1);
+      transform: translateX(10px);
+    }
+
+    .point-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+
+    .privacy-point:hover .point-icon {
+      transform: scale(1.1);
+    }
+
+    .point-content {
+      flex: 1;
+    }
+
+    .point-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .point-description {
+      color: var(--text-color);
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    .privacy-agreement {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      border: 1px solid rgba(102, 126, 234, 0.2);
+      margin: 2.5rem 0;
+    }
+
+    .agreement-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin: 0;
+    }
+
+    .back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      margin-top: 1rem;
+    }
+
+    .back-home:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      color: white;
+      text-decoration: none;
+    }
+
+    .security-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: rgba(40, 167, 69, 0.1);
+      color: #28a745;
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      font-weight: 600;
+      margin: 1rem 0 2rem;
+      border: 1px solid rgba(40, 167, 69, 0.2);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Decorative Elements */
+    .floating-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .floating-shape {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.05;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-25px) rotate(5deg); }
+    }
+
+    .floating-shape:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+    .floating-shape:nth-child(2) { top: 20%; right: 10%; animation-delay: 2s; }
+    .floating-shape:nth-child(3) { bottom: 30%; left: 10%; animation-delay: 4s; }
+    .floating-shape:nth-child(4) { bottom: 20%; right: 5%; animation-delay: 6s; }
+    .floating-shape:nth-child(5) { top: 50%; left: 15%; animation-delay: 1s; }
+    .floating-shape:nth-child(6) { top: 60%; right: 15%; animation-delay: 3s; }
+
+    /* Section Styling */
+    .policy-section {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .privacy-title {
+        font-size: 2.5rem;
+      }
+      
+      .privacy-subtitle {
+        font-size: 1.1rem;
+      }
+      
+      .privacy-card {
+        padding: 2rem 1.5rem;
+      }
+      
+      .privacy-point {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+      
+      .point-icon {
+        align-self: center;
+      }
+    }
+
+    /* Trust Indicators */
+    .trust-indicators {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+    }
+
+    .trust-item {
+      text-align: center;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 15px;
+      transition: all 0.3s ease;
+    }
+
+    [data-theme="dark"] .trust-item {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .trust-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .trust-icon {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .trust-title {
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .trust-description {
+      font-size: 0.9rem;
+      color: #6c757d;
+      margin: 0;
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <!-- Decorative Background Elements -->
+  <div class="floating-shapes">
+    <div class="floating-shape">🔒</div>
+    <div class="floating-shape">📚</div>
+    <div class="floating-shape">🛡️</div>
+    <div class="floating-shape">🔐</div>
+    <div class="floating-shape">📖</div>
+    <div class="floating-shape">💫</div>
+  </div>
+
+  <div class="privacy-container">
+    <!-- Header Section -->
+    <div class="privacy-header">
+      <h1 class="privacy-title">
+        <i class="fas fa-shield-alt me-3"></i>Privacy Policy
+      </h1>
+      <p class="privacy-subtitle">
+        Your privacy and data security are our top priorities
+      </p>
+      
+      <div class="security-badge">
+        <i class="fas fa-lock"></i>
+        Your Data is Protected & Secure
+      </div>
+    </div>
+
+    <!-- Main Privacy Content -->
+    <div class="privacy-card">
+      <!-- Introduction -->
+      <div class="privacy-intro">
+        At Mini Book List App, we believe your privacy is fundamental. 
+        We are committed to protecting your personal information and being transparent about our practices.
+      </div>
+
+      <!-- Trust Indicators -->
+      <div class="trust-indicators">
+        <div class="trust-item">
+          <div class="trust-icon">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <div class="trust-title">Data Protection</div>
+          <div class="trust-description">Your information is securely stored</div>
+        </div>
+        
+        <div class="trust-item">
+          <div class="trust-icon">
+            <i class="fas fa-ban"></i>
+          </div>
+          <div class="trust-title">No Third-Party Sharing</div>
+          <div class="trust-description">We don't sell or share your data</div>
+        </div>
+        
+        <div class="trust-item">
+          <div class="trust-icon">
+            <i class="fas fa-trash-alt"></i>
+          </div>
+          <div class="trust-title">Easy Data Removal</div>
+          <div class="trust-description">Delete your data anytime</div>
+        </div>
+      </div>
+
+      <!-- Privacy Points -->
+      <ul class="privacy-points">
+        <li class="privacy-point">
+          <div class="point-icon">
+            <i class="fas fa-share-alt-slash"></i>
+          </div>
+          <div class="point-content">
+            <div class="point-title">No Data Sharing</div>
+            <p class="point-description">
+              We do not share, sell, or distribute your personal data with any third parties. 
+              Your information remains confidential within our secure system.
+            </p>
+          </div>
+        </li>
+
+        <li class="privacy-point">
+          <div class="point-icon">
+            <i class="fas fa-database"></i>
+          </div>
+          <div class="point-content">
+            <div class="point-title">Secure Data Storage</div>
+            <p class="point-description">
+              All information you provide is stored securely using industry-standard encryption 
+              and protection measures to prevent unauthorized access.
+            </p>
+          </div>
+        </li>
+
+        <li class="privacy-point">
+          <div class="point-icon">
+            <i class="fas fa-user-times"></i>
+          </div>
+          <div class="point-content">
+            <div class="point-title">Data Removal Rights</div>
+            <p class="point-description">
+              You have the right to request complete removal of your data from our systems 
+              at any time. Contact us to initiate the process.
+            </p>
+          </div>
+        </li>
+
+        <li class="privacy-point">
+          <div class="point-icon">
+            <i class="fas fa-info-circle"></i>
+          </div>
+          <div class="point-content">
+            <div class="point-title">Transparent Practices</div>
+            <p class="point-description">
+              We only collect basic information necessary for providing the Book List App experience 
+              and are transparent about how we use your data.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Agreement Section -->
+      <div class="privacy-agreement">
+        <p class="agreement-text">
+          <i class="fas fa-check-circle me-2"></i>
+          By using Mini Book List App, you agree to the terms outlined in this Privacy Policy
+        </p>
+      </div>
+
+      <!-- Additional Information -->
+      <div class="policy-section">
+        <h3 class="section-title">
+          <i class="fas fa-question-circle me-2"></i>
+          Need More Information?
+        </h3>
+        <p style="color: #6c757d; margin-bottom: 0;">
+          If you have any questions about our privacy practices or how we handle your data, 
+          please don't hesitate to contact our support team. We're here to help!
+        </p>
+      </div>
+    </div>
+
+    <!-- Back to Home Button -->
+    <div class="text-center">
+      <a href="/" class="back-home">
+        <i class="fas fa-arrow-left me-2"></i>
+        Back to Home
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Theme detection (if you have theme system)
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    document.body.setAttribute('data-theme', currentTheme);
+
+    // Add hover effects
+    document.querySelectorAll('.privacy-point').forEach(point => {
+      point.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateX(10px)';
+      });
+      
+      point.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateX(0)';
+      });
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Add loading animation
+    document.addEventListener('DOMContentLoaded', function() {
+      const elements = document.querySelectorAll('.privacy-point, .trust-item');
+      elements.forEach((element, index) => {
+        element.style.animation = `fadeInUp 0.6s ease ${index * 0.1}s both`;
+      });
+    });
+  </script>
+</body>
+</html>
